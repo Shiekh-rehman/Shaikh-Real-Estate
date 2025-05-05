@@ -1,0 +1,44 @@
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: openNavbar 1s ease-in-out;
+}
+
+@keyframes openNavbar {
+    0% {
+        opacity: 0;
+        transform: scaleX(0);
+        transform-origin: center;
+    }
+    100% {
+        opacity: 1;
+        transform: scaleX(1);
+        transform-origin: center;
+    }
+}
+
+.offcanvas {
+    background-color: #ffffffee;
+    backdrop-filter: blur(8px);
+}
+
+.nav-link {
+    font-size: 1.2rem;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+.offcanvas-body i {
+    margin-right: 8px;
+}
