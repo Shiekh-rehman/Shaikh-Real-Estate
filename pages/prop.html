@@ -1,396 +1,511 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Property Listings</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #121212;
-      color: #fff;
-    }
-
-    nav {
-      position: sticky;
-      top: 0;
-      background-color: #1f1f1f;
-      padding: 1rem 2rem;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    }
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #03dac6;
-    }
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-    }
-    .nav-links li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-    .nav-links li a:hover {
-      color: #03dac6;
-    }
-
-    .container {
-      padding: 2rem;
-    }
-
-    h2.section-title {
-      color: #03dac6;
-      margin-bottom: 1rem;
-      font-size: 1.8rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .card {
-      background: #1e1e1e;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0,0,0,0.6);
-      transition: transform 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-    }
-
-    .image {
-      width: 100%;
-      height: 200px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .content {
-      padding: 1rem;
-      flex-grow: 1;
-    }
-
-    .title {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .description {
-      font-size: 0.9rem;
-      color: #b0b0b0;
-      margin-bottom: 1rem;
-    }
-
-    .price {
-      font-weight: bold;
-      color: #ffab00;
-      margin-bottom: 1rem;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #03dac6;
-      color: #121212;
-      border: none;
-      border-radius: 8px;
-      text-align: center;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #00c4b4;
-    }
-
-    .btn-wrapper {
-      padding: 1rem;
-      text-align: center;
-    }
-
-    /* sidebar */
-     .sidebar {
-      width: 250px;
-      background-color: #1e1e1e;
-      padding: 2rem 1rem;
-      border-right: 1px solid #333;
-    }
-
-    .sidebar h2 {
-      margin-bottom: 1rem;
-      color: #03dac6;
-      font-size: 1.2rem;
-    }
-
-    .filter-btn {
-      display: block;
-      background: none;
-      border: none;
-      color: #fff;
-      margin: 0.5rem 0;
-      text-align: left;
-      padding: 0.5rem;
-      width: 100%;
-      cursor: pointer;
-      font-size: 1rem;
-      border-radius: 5px;
-      transition: background 0.2s;
-    }
-
-    .filter-btn:hover {
-      background-color: #2a2a2a;
-    }
-
-    .main-content {
-      flex: 1;
-      padding: 2rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .card {
-      background-color: #1e1e1e;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-      transition: transform 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-    }
-
-    .image {
-      width: 100%;
-      height: 180px;
-      background-size: cover;
-      background-position: center;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-
-    .title {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      color: #03dac6;
-    }
-
-    .price {
-      color: #ffab00;
-      margin-bottom: 0.5rem;
-    }
-
-    .tag {
-      font-size: 0.8rem;
-      background: #333;
-      display: inline-block;
-      padding: 0.3rem 0.6rem;
-      border-radius: 5px;
-      margin-top: 0.5rem;
-    }
-
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #333;
-      }
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-900 text-gray-200 min-h-screen p-4">
 
-  <!-- Navbar -->
-  <nav>
-    <div class="nav-container">
-      <div class="logo">🏠 Properties</div>
-      <ul class="nav-links">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="./prop.html">Listings</a></li>
-        <li><a href="./about.html">About</a></li>
-        <li><a href="../pages/contact.html">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  
-  <div class="sidebar">
-    <h2>Filter by Type</h2>
-    <button class="filter-btn" onclick="filterCards('all')">All</button>
-    <button class="filter-btn" onclick="filterCards('installment')">Installment</button>
-    <button class="filter-btn" onclick="filterCards('cash')">Cash</button>
-    <button class="filter-btn" onclick="filterCards('house')">House</button>
-    <button class="filter-btn" onclick="filterCards('plot')">Plot</button>
-    <button class="filter-btn" onclick="filterCards('commercial')">Commercial</button>
+  <!-- Location Search -->
+  <div class="mb-4 max-w-md mx-auto">
+    <input id="searchLocation" type="text" placeholder="Search by location..." class="w-full p-2 rounded-md bg-gray-800 text-gray-200 placeholder-gray-500" />
   </div>
 
-  <div class="main-content">
-    <h1 style="text-align: center; color: #03dac6;">Filtered Property Listings</h1>
-    <div class="grid">
-      <!-- House Installment -->
-      <div class="card installment house">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?house');"></div>
-        <div class="title">Luxury House - DHA</div>
-        <div class="price">PKR 3.2 Crore</div>
-        <div class="tag">Installment · House</div>
-      </div>
-
-      <!-- Cash Plot -->
-      <div class="card cash plot">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?plot');"></div>
-        <div class="title">Corner Plot - Bahria</div>
-        <div class="price">PKR 85 Lakh</div>
-        <div class="tag">Cash · Plot</div>
-      </div>
-
-      <!-- Commercial Cash -->
-      <div class="card cash commercial">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?building');"></div>
-        <div class="title">Commercial Plaza</div>
-        <div class="price">PKR 5 Crore</div>
-        <div class="tag">Cash · Commercial</div>
-      </div>
-
-      <!-- Plot Installment -->
-      <div class="card installment plot">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?land');"></div>
-        <div class="title">Installment Plot - Lahore</div>
-        <div class="price">PKR 40 Lakh</div>
-        <div class="tag">Installment · Plot</div>
-      </div>
-
-      <!-- House Cash -->
-      <div class="card cash house">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?villa');"></div>
-        <div class="title">Furnished House - Model Town</div>
-        <div class="price">PKR 2.8 Crore</div>
-        <div class="tag">Cash · House</div>
-      </div>
-    </div>
+  <!-- Category Tabs -->
+  <div class="flex justify-center gap-4 mb-6 flex-wrap">
+    <button data-category="all" class="category-btn px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700">All</button>
+    <button data-category="rental" class="category-btn px-4 py-2 rounded-md hover:bg-indigo-600">Rental</button>
+    <button data-category="residential" class="category-btn px-4 py-2 rounded-md hover:bg-indigo-600">Residential</button>
+    <button data-category="commercial" class="category-btn px-4 py-2 rounded-md hover:bg-indigo-600">Commercial</button>
+    <button data-category="land" class="category-btn px-4 py-2 rounded-md hover:bg-indigo-600">Land</button>
+    <button data-category="flats" class="category-btn px-4 py-2 rounded-md hover:bg-indigo-600">Flats</button>
+    <button data-category="houses" class="category-btn px-4 py-2 rounded-md hover:bg-indigo-600">Houses</button>
   </div>
 
-  <!-- Listings Section -->
-  <div class="container">
+  <!-- Filters Panel -->
+  <div class="max-w-4xl mx-auto mb-8 flex flex-wrap gap-4 justify-center">
+    <!-- Budget -->
+    <select id="filterBudget" class="p-2 rounded-md bg-gray-800 text-gray-200">
+      <option value="all">Budget: All</option>
+      <option value="0-50000">Under 50,000</option>
+      <option value="50000-150000">50,000 - 1,50,000</option>
+      <option value="150000-500000">1,50,000 - 5,00,000</option>
+      <option value="500000+">Above 5,00,000</option>
+    </select>
 
-    <h2 class="section-title">Blue World City</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?villa');"></div>
-        <div class="content">
-          <div class="title">Luxury Villa in DHA</div>
-          <div class="description">5 bed · 6 bath · 1 kanal · Swimming Pool · Lawn</div>
-          <div class="price">PKR 8.5 Crore</div>
-        </div>
-        <div class="btn-wrapper">
-          <a href="https://wa.me/923130094251?text=Hi%20I%20am%20interested%20in%20this%20property." class="button">Book Consultation</a>
-        </div>
-      </div>
+    <!-- Installment -->
+    <select id="filterInstallment" class="p-2 rounded-md bg-gray-800 text-gray-200">
+      <option value="all">Installment: All</option>
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select>
 
-      <div class="card">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?apartment');"></div>
-        <div class="content">
-          <div class="title">Modern Apartment</div>
-          <div class="description">3 bed · 2 bath · 10 Marla · Balcony View</div>
-          <div class="price">PKR 1.2 Crore</div>
-        </div>
-        <div class="btn-wrapper">
-          <a href="https://wa.me/923130094251?text=Hi%20I%20am%20interested%20in%20this%20property." class="button">Book Consultation</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?commercial-building');"></div>
-        <div class="content">
-          <div class="title">Commercial Plot</div>
-          <div class="description">2 kanal · Ideal for Plaza · Main Road</div>
-          <div class="price">PKR 5 Crore</div>
-        </div>
-        <div class="btn-wrapper">
-          <a href="https://wa.me/923130094251?text=Hi%20I%20am%20interested%20in%20this%20property." class="button">Book Consultation</a>
-        </div>
-      </div>
-    </div>
-
-    <h2 class="section-title">French Housing Society</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?farmhouse');"></div>
-        <div class="content">
-          <div class="title">Bedian Farmhouse</div>
-          <div class="description">4 bed · 4 bath · 2 kanal · Green Area</div>
-          <div class="price">PKR 3.6 Crore</div>
-        </div>
-        <div class="btn-wrapper">
-          <a href="https://wa.me/923130094251?text=Hi%20I%20am%20interested%20in%20this%20property." class="button">Book Consultation</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?resort');"></div>
-        <div class="content">
-          <div class="title">Luxury Retreat</div>
-          <div class="description">3 bed · 3 bath · Pool · Huge Lawn</div>
-          <div class="price">PKR 4.2 Crore</div>
-        </div>
-        <div class="btn-wrapper">
-          <a href="https://wa.me/923130094251?text=Hi%20I%20am%20interested%20in%20this%20property." class="button">Book Consultation</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="image" style="background-image: url('https://source.unsplash.com/400x300/?villa-exterior');"></div>
-        <div class="content">
-          <div class="title">Peaceful Escape</div>
-          <div class="description">2 kanal · Modern Design · Countryside</div>
-          <div class="price">PKR 2.9 Crore</div>
-        </div>
-        <div class="btn-wrapper">
-          <a href="https://wa.me/923130094251?text=Hi%20I%20am%20interested%20in%20this%20property." class="button">Book Consultation</a>
-        </div>
-      </div>
-    </div>
-
+    <!-- Status -->
+    <select id="filterStatus" class="p-2 rounded-md bg-gray-800 text-gray-200">
+      <option value="all">Status: All</option>
+      <option value="available">Available</option>
+      <option value="sold">Sold</option>
+    </select>
   </div>
 
-  <script>
-    function filterCards(category) {
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        if (category === 'all') {
-          card.style.display = 'block';
+  <!-- Properties Grid -->
+  <div id="propertiesGrid" class="max-w-6xl mx-auto grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <!-- Cards inserted by JS here -->
+  </div>
+
+  <!-- No Results Notification -->
+  <div id="noResults" class="hidden max-w-4xl mx-auto text-center text-red-400 mt-10 text-lg font-semibold">
+    Sorry, no listings match your filters. Kindly try different criteria. or check back later.
+  </div>
+
+  <!-- Image Carousel Modal -->
+  <div id="carouselModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 z-50 hidden">
+    <button id="closeCarousel" class="absolute top-4 right-4 text-white text-3xl font-bold hover:text-red-500">&times;</button>
+    <img id="carouselImage" src="" alt="Property Image" class="max-h-[80vh] rounded-md shadow-lg" />
+    <button id="prevImg" class="absolute left-4 text-white text-4xl font-bold hover:text-indigo-500">&#10094;</button>
+    <button id="nextImg" class="absolute right-4 text-white text-4xl font-bold hover:text-indigo-500">&#10095;</button>
+  </div>
+
+<script>
+  // Sample Data Array with multiple listings per category
+  const properties = [
+    // Rental - 10 sample
+    {
+      id: 'rental-1',
+      category: 'rental',
+      title: 'Cozy Rental Apartment',
+      location: 'Karachi',
+      price: 35000,
+      installment: 'yes',
+      status: 'available',
+      rooms: 3,
+      bedrooms: 2,
+      bathrooms: 1,
+      images: [
+        'https://via.placeholder.com/300x533?text=Rental+1a',
+        'https://via.placeholder.com/300x533?text=Rental+1b'
+      ]
+    },
+    // Add 9 more rental listings with different data...
+    {
+      id: 'rental-2',
+      category: 'rental',
+      title: 'Spacious Rental Flat',
+      location: 'Lahore',
+      price: 45000,
+      installment: 'no',
+      status: 'available',
+      rooms: 4,
+      bedrooms: 3,
+      bathrooms: 2,
+      images: [
+        'https://via.placeholder.com/300x533?text=Rental+2a',
+        'https://via.placeholder.com/300x533?text=Rental+2b'
+      ]
+    },
+    // ...add more rental properties (total 10)...
+
+    // Residential - 10 sample
+    {
+      id: 'residential-1',
+      category: 'residential',
+      title: 'Family Residential Home',
+      location: 'Islamabad',
+      price: 850000,
+      installment: 'yes',
+      status: 'available',
+      rooms: 6,
+      bedrooms: 4,
+      bathrooms: 3,
+      images: [
+        'https://via.placeholder.com/300x533?text=Residential+1a',
+        'https://via.placeholder.com/300x533?text=Residential+1b'
+      ]
+    },
+    // ...add 9 more residential properties
+
+    // Commercial - 10 sample
+    {
+      id: 'commercial-1',
+      category: 'commercial',
+      title: 'Prime Commercial Plaza',
+      location: 'Gulraiz Housing Society',
+      price: 62500000,
+      installment: 'No',
+      status: 'available',
+      rooms: 10,
+      bedrooms: 10,
+      bathrooms: 10,
+      images: [
+        '/assets/gulraiz housing plaza 6.25.jpg',
+        '/assets/gulraiz housing plaza 6.25.jpg'
+      ]
+    },
+    {
+      id: 'commercial-1',
+      category: 'commercial',
+      title: 'Prime Commercial Plaza',
+      location: 'Faisal Hills Civic Center plot 45',
+      price: 15000000,
+      installment: 'Yes',
+      status: 'available',
+      rooms: 10,
+      bedrooms: 10,
+      bathrooms: 10,
+      images: [
+        '/assets/nexus tower 1.jpg',
+        '/assets/nexustower2.jpg',
+      ]
+    },
+    {
+      id: 'commercial-1',
+      category: 'commercial',
+      title: 'Prime Commercial Plaza',
+      location: 'Faisal Hills Civic Center plot 45',
+      price: 15000000,
+      installment: 'Yes',
+      status: 'available',
+      rooms: 10,
+      bedrooms: 10,
+      bathrooms: 10,
+      images: [
+        '/assets/nexus tower 1.jpg',
+        '/assets/nexustower2.jpg',
+      ]
+    },
+    // ...add 9 more commercial properties
+
+    // Land - 10 sample
+    {
+      id: 'land-1',
+      category: 'land',
+      title: 'Green Land Plot',
+      location: 'Faisalabad',
+      price: 1200000,
+      installment: 'no',
+      status: 'available',
+      rooms: 0,
+      bedrooms: 0,
+      bathrooms: 0,
+      images: [
+        'https://via.placeholder.com/300x533?text=Land+1a',
+        'https://via.placeholder.com/300x533?text=Land+1b'
+      ]
+    },
+    // ...add 9 more land properties
+
+    // Flats - 10 sample
+    {
+      id: 'flats-1',
+      category: 'flats',
+      title: 'Modern Flat with Balcony',
+      location: 'Multan',
+      price: 75000,
+      installment: 'yes',
+      status: 'available',
+      rooms: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      images: [
+        'https://via.placeholder.com/300x533?text=Flat+1a',
+        'https://via.placeholder.com/300x533?text=Flat+1b'
+      ]
+    },
+    // ...add 9 more flats
+
+    // Houses - 10 sample
+    {
+      id: 'houses-1',
+      category: 'houses',
+      title: 'Luxurious Family House',
+      location: 'Defence Road Near Askari-14',
+      price: 1.75,
+      installment: 'No',
+      status: '6.15 Marla',
+      rooms: 3,
+      bedrooms: 3,
+      bathrooms: 3,
+      images: [
+        '/assets/house 1.jpg',
+        '/assets/house 1.jpg',
+        '/assets/house1part2.jpg',
+        '/assets/house1part3.jpg',
+        '/assets/house1part4.jpg',
+        '/assets/house1part5.jpg',
+        '/assets/house1part6.jpg',
+        '/assets/house1part7.jpg',
+        '/assets/house1part8.jpg',
+        '/assets/house1part9.jpg',
+      ]
+    },
+    {
+      id: 'houses-1',
+      category: 'houses',
+      title: 'Luxurious Family House',
+      location: 'Bahria Town Phase 8',
+      price: 72500000,
+      installment: 'No',
+      status: '26 Marla available',
+      rooms: 3,
+      bedrooms: 3,
+      bathrooms: 3,
+      images: [
+        '/assets/house2.jpg',
+        '/assets/house2.jpg',
+        '/assets/house2part2.jpg',
+        '/assets/house2part3.jpg',
+        '/assets/house2part4.jpg',
+        '/assets/house2part5.jpg',
+        '/assets/house2part6.jpg',
+        '/assets/house2part7.jpg',
+        '/assets/house2part8.jpg',
+      ]
+    },
+    // ...add 9 more houses
+  ];
+
+  // Initial States
+  let currentCategory = 'all';
+  let currentBudget = 'all';
+  let currentInstallment = 'all';
+  let currentStatus = 'all';
+  let currentLocation = '';
+
+  // Favorite set to track saved properties
+  const favorites = new Set();
+
+  // DOM Elements
+  const propertiesGrid = document.getElementById('propertiesGrid');
+  const noResultsDiv = document.getElementById('noResults');
+
+  // Filter elements
+  const filterBudget = document.getElementById('filterBudget');
+  const filterInstallment = document.getElementById('filterInstallment');
+  const filterStatus = document.getElementById('filterStatus');
+  const searchLocation = document.getElementById('searchLocation');
+
+  // Category buttons
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentCategory = btn.dataset.category;
+      updateCategoryUI(btn);
+      renderProperties();
+    });
+  });
+
+  // Update active category button style
+  function updateCategoryUI(activeBtn) {
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.classList.remove('bg-indigo-600', 'text-white');
+      btn.classList.add('text-indigo-300');
+    });
+    activeBtn.classList.add('bg-indigo-600', 'text-white');
+  }
+  // Set initial active category
+  updateCategoryUI(document.querySelector('.category-btn[data-category="all"]'));
+
+  // Filter event listeners
+  filterBudget.addEventListener('change', (e) => {
+    currentBudget = e.target.value;
+    renderProperties();
+  });
+
+  filterInstallment.addEventListener('change', (e) => {
+    currentInstallment = e.target.value;
+    renderProperties();
+  });
+
+  filterStatus.addEventListener('change', (e) => {
+    currentStatus = e.target.value;
+    renderProperties();
+  });
+
+  searchLocation.addEventListener('input', (e) => {
+    currentLocation = e.target.value.trim().toLowerCase();
+    renderProperties();
+  });
+
+  // Helper: Check if property matches filters
+  function matchesFilters(prop) {
+    // Category
+    if (currentCategory !== 'all' && prop.category !== currentCategory) return false;
+
+    // Budget
+    if (currentBudget !== 'all') {
+      if (currentBudget === '0-50000' && prop.price > 50000) return false;
+      if (currentBudget === '50000-150000' && (prop.price < 50000 || prop.price > 150000)) return false;
+      if (currentBudget === '150000-500000' && (prop.price < 150000 || prop.price > 500000)) return false;
+      if (currentBudget === '500000+' && prop.price < 500000) return false;
+    }
+
+    // Installment
+    if (currentInstallment !== 'all' && prop.installment !== currentInstallment) return false;
+
+    // Status
+    if (currentStatus !== 'all' && prop.status !== currentStatus) return false;
+
+    // Location search (case insensitive substring match)
+    if (currentLocation && !prop.location.toLowerCase().includes(currentLocation)) return false;
+
+    return true;
+  }
+
+  // Render properties
+  function renderProperties() {
+    propertiesGrid.innerHTML = '';
+
+    const filteredProps = properties.filter(matchesFilters);
+
+    if (filteredProps.length === 0) {
+      noResultsDiv.classList.remove('hidden');
+      return;
+    } else {
+      noResultsDiv.classList.add('hidden');
+    }
+
+    filteredProps.forEach(prop => {
+      const card = document.createElement('div');
+      card.className = "bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition duration-500 hover:scale-105 cursor-pointer flex flex-col";
+
+      // Image container (click to open carousel)
+      const imgDiv = document.createElement('div');
+      imgDiv.className = 'relative h-64 overflow-hidden';
+      const img = document.createElement('img');
+      img.src = prop.images[0];
+      img.alt = prop.title;
+      img.className = "object-cover w-full h-full";
+      imgDiv.appendChild(img);
+      imgDiv.addEventListener('click', () => openCarousel(prop.images));
+
+      card.appendChild(imgDiv);
+
+      // Content
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'p-4 flex flex-col flex-grow';
+
+      // Title and Location
+      const title = document.createElement('h3');
+      title.textContent = prop.title;
+      title.className = 'text-lg font-semibold mb-1';
+      contentDiv.appendChild(title);
+
+      const location = document.createElement('p');
+      location.textContent = prop.location;
+      location.className = 'text-sm text-indigo-400 mb-2';
+      contentDiv.appendChild(location);
+
+      // Price & Status
+      const priceStatusDiv = document.createElement('div');
+      priceStatusDiv.className = 'flex justify-between items-center mb-2 text-sm';
+
+      const price = document.createElement('span');
+      price.textContent = `PKR ${prop.price.toLocaleString()}`;
+      price.className = 'font-semibold';
+      priceStatusDiv.appendChild(price);
+
+      const status = document.createElement('span');
+      status.textContent = prop.status.toUpperCase();
+      status.className = prop.status === 'available' ? 'text-green-400 font-semibold' : 'text-red-400 font-semibold';
+      priceStatusDiv.appendChild(status);
+
+      contentDiv.appendChild(priceStatusDiv);
+
+      // Rooms info
+      const roomsInfo = document.createElement('p');
+      roomsInfo.textContent = `Rooms: ${prop.rooms} | Bedrooms: ${prop.bedrooms} | Bathrooms: ${prop.bathrooms}`;
+      roomsInfo.className = 'text-xs text-gray-400 mb-3';
+      contentDiv.appendChild(roomsInfo);
+
+      // Buttons container
+      const btnContainer = document.createElement('div');
+      btnContainer.className = 'mt-auto flex justify-between items-center gap-3';
+
+      // Favorite Button
+      const favBtn = document.createElement('button');
+      favBtn.className = 'text-red-400 hover:text-red-600 transition text-xl';
+      favBtn.innerHTML = favorites.has(prop.id) ? '❤️' : '🤍';
+      favBtn.title = 'Save to Favorites';
+      favBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        if (favorites.has(prop.id)) {
+          favorites.delete(prop.id);
+          favBtn.innerHTML = '🤍';
         } else {
-          card.style.display = card.classList.contains(category) ? 'block' : 'none';
+          favorites.add(prop.id);
+          favBtn.innerHTML = '❤️';
         }
       });
-    }
-  </script>
+      btnContainer.appendChild(favBtn);
 
+      // Consultation Button
+      const consultBtn = document.createElement('button');
+      consultBtn.textContent = '☎️ Consultation';
+      consultBtn.className = 'bg-indigo-600 hover:bg-indigo-700 rounded-md px-3 py-1 text-sm transition';
+      consultBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        alert(`Contact for ${prop.title} at ${prop.location}`);
+      });
+      btnContainer.appendChild(consultBtn);
+
+      contentDiv.appendChild(btnContainer);
+
+      card.appendChild(contentDiv);
+
+      propertiesGrid.appendChild(card);
+    });
+  }
+
+  // Carousel Logic
+  const carouselModal = document.getElementById('carouselModal');
+  const carouselImage = document.getElementById('carouselImage');
+  const closeCarouselBtn = document.getElementById('closeCarousel');
+  const prevImgBtn = document.getElementById('prevImg');
+  const nextImgBtn = document.getElementById('nextImg');
+
+  let currentImages = [];
+  let currentImgIndex = 0;
+
+  function openCarousel(images) {
+    currentImages = images;
+    currentImgIndex = 0;
+    updateCarouselImage();
+    carouselModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateCarouselImage() {
+    carouselImage.src = currentImages[currentImgIndex];
+  }
+
+  closeCarouselBtn.addEventListener('click', () => {
+    carouselModal.classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+
+  prevImgBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentImgIndex = (currentImgIndex - 1 + currentImages.length) % currentImages.length;
+    updateCarouselImage();
+  });
+
+  nextImgBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentImgIndex = (currentImgIndex + 1) % currentImages.length;
+    updateCarouselImage();
+  });
+
+  // Close carousel when clicking outside image
+  carouselModal.addEventListener('click', (e) => {
+    if (e.target === carouselModal) {
+      carouselModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Initial render
+  renderProperties();
+</script>
 </body>
 </html>
